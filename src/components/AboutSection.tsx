@@ -3,18 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Laptop, ChevronDown } from 'lucide-react';
 
 export default function AboutSection() {
-  const [openIndex, setOpenIndex] = useState(null); // Semua accordion default tertutup
+  const [openIndex, setOpenIndex] = useState(null);
 
   const stats = [
     { icon: Globe, value: 'Always', label: 'Learning' },
-    { icon: Laptop, value: 'Daily', label: 'Practice' }, // Icon lebih menarik
+    { icon: Laptop, value: 'Daily', label: 'Practice' },
   ];
 
   const accordionData = [
     {
       title: "My Learning Journey",
       content:
-        "I am currently learning web development step by step, starting from the basics and gradually building small projects to improve my skills. I enjoy exploring new ideas, practicing regularly, and understanding how different parts of a website work together. Even though I am still at the learning stage, I stay consistent and motivated to keep growing.",
+        "I am currently learning web development step by step, starting from the basics and gradually building small projects to improve my skills. Even though I am still at the learning stage, I stay consistent and motivated to keep growing.",
     },
     {
       title: "My Vision",
@@ -74,23 +74,22 @@ export default function AboutSection() {
         {/* CONTENT */}
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
 
-          {/* LEFT (TIDAK DIUBAH ISINYA) */}
+          {/* LEFT CARD PROFIL */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ type: 'spring', stiffness: 80 }}
             className="relative group"
           >
-
             <div
               className="p-8 rounded-2xl 
               backdrop-blur-xl bg-white/70 dark:bg-white/5 
               border border-black/5 dark:border-white/10
               transition-all duration-500
               group-hover:scale-[1.02]
-              group-hover:shadow-[0_0_60px_rgba(139,92,246,0.25)]"
+              group-hover:shadow-[0_0_60px_rgba(139,92,246,0.5)]
+              shadow-[0_0_30px_rgba(139,92,246,0.2)]"
             >
-
               <h3 className="text-2xl font-bold 
               bg-gradient-to-r 
               from-indigo-600 via-purple-600 to-pink-600
@@ -120,18 +119,18 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* ✨ SIMBOL ANIMASI SPARKLE BESAR */}
+            {/* ✨ SIMBOL ANIMASI SPARKLE PELAN */}
             <motion.div
-              className="mt-6 text-center text-2xl font-bold
+              className="mt-6 text-center text-4xl font-bold
               bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600
               bg-clip-text text-transparent tracking-widest"
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.8, 1, 0.8],
+                scale: [0.8, 0.9, 0.8],
+                opacity: [0.9, 1, 0.9],
               }}
               transition={{
                 repeat: Infinity,
-                duration: 1,
+                duration: 4,
                 ease: "easeInOut",
               }}
             >
@@ -195,15 +194,21 @@ export default function AboutSection() {
               })}
             </div>
 
-            {/* STATS BARU DENGAN ICON LAPTOP */}
-            <div className="grid grid-cols-2 gap-4 pt-4">
+            {/* STATS KECIL DENGAN SHADOW GLOW */}
+            <div className="grid grid-cols-2 gap-3 pt-4">
               {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
-                  whileHover={{ y: -4 }}
+                  whileHover={{
+                    y: -4,
+                    scale: 1.03,
+                    boxShadow: "0 10px 25px rgba(138, 92, 246, 0.44)",
+                  }}
                   className="p-4 rounded-xl text-center 
-                  backdrop-blur-xl bg-white/70 dark:bg-white/5 
-                  border border-black/5 dark:border-white/10"
+                    backdrop-blur-xl bg-white/70 dark:bg-white/5 
+                    border border-black/5 dark:border-white/10
+                    transition-all duration-300
+                    shadow-[0_0_15px_rgba(139,92,246,0.15)]"
                 >
                   <stat.icon className="h-6 w-6 text-indigo-500 mx-auto mb-2" />
                   <p className="text-xl font-bold text-gray-800 dark:text-white">
