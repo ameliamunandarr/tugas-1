@@ -1,27 +1,43 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, Torus, Box, Icosahedron } from '@react-three/drei';
+import { Float, MeshDistortMaterial, Sphere } from '@react-three/drei';
 import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
-function AnimatedSphere() {
+/* 🌐 SCROLL SPEED TRACKER */
+function useScrollSpeed() {
+  const speed = useRef(0);
+  const lastY = useRef(0);
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("scroll", () => {
+      const currentY = window.scrollY;
+      speed.current = Math.abs(currentY - lastY.current);
+      lastY.current = currentY;
+    });
+  }
+
+  return speed;
+}
+
+/* 🔵 MAIN SPHERE */
+function AnimatedSphere({ color }: { color: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
-  
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.x = state.clock.elapsedTime * 0.2;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.25;
     }
   });
 
   return (
     <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <Sphere ref={meshRef} args={[1, 64, 64]} position={[0, 0, 0]}>
+      <Sphere ref={meshRef} args={[1, 64, 64]}>
         <MeshDistortMaterial
-          color="#14b8a6"
-          attach="material"
-          distort={0.4}
+          color={color}
+          distort={0.35}
           speed={2}
-          roughness={0.2}
+          roughness={0.25}
           metalness={0.8}
         />
       </Sphere>
@@ -29,77 +45,11 @@ function AnimatedSphere() {
   );
 }
 
-function FloatingTorus() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.5;
-      meshRef.current.rotation.z = state.clock.elapsedTime * 0.3;
-    }
-  });
+/* ✨ PARTICLE */
+function ParticleField({ color }: { color: string }) {
+  const count = 150;
+  const speedRef = useScrollSpeed();
 
-  return (
-    <Float speed={1.5} rotationIntensity={2} floatIntensity={1}>
-      <Torus ref={meshRef} args={[0.6, 0.2, 32, 64]} position={[2.5, 1, -1]}>
-        <meshStandardMaterial
-          color="#0ea5e9"
-          roughness={0.3}
-          metalness={0.9}
-        />
-      </Torus>
-    </Float>
-  );
-}
-
-function FloatingBox() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.4;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
-    }
-  });
-
-  return (
-    <Float speed={1.8} rotationIntensity={1.5} floatIntensity={1.5}>
-      <Box ref={meshRef} args={[0.5, 0.5, 0.5]} position={[-2.5, -0.5, -0.5]}>
-        <meshStandardMaterial
-          color="#8b5cf6"
-          roughness={0.2}
-          metalness={0.8}
-        />
-      </Box>
-    </Float>
-  );
-}
-
-function FloatingIcosahedron() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.3;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
-    }
-  });
-
-  return (
-    <Float speed={2.2} rotationIntensity={1} floatIntensity={2}>
-      <Icosahedron ref={meshRef} args={[0.4, 1]} position={[-1.8, 1.5, 0]}>
-        <meshStandardMaterial
-          color="#f97316"
-          roughness={0.3}
-          metalness={0.7}
-        />
-      </Icosahedron>
-    </Float>
-  );
-}
-
-function ParticleField() {
-  const count = 100;
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -114,7 +64,14 @@ function ParticleField() {
 
   useFrame((state) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.05;
+      // 🌀 base rotation
+      pointsRef.current.rotation.y += 0.0005;
+
+      // 🚀 tambahan dari scroll speed
+      pointsRef.current.rotation.y += speedRef.current * 0.00002;
+
+      // damping biar smooth
+      speedRef.current *= 0.9;
     }
   });
 
@@ -128,23 +85,52 @@ function ParticleField() {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.02} color="#14b8a6" transparent opacity={0.6} />
+
+      <pointsMaterial
+        size={0.02}
+        color={color}
+        transparent
+        opacity={0.5}
+      />
     </points>
   );
 }
 
-export default function ThreeScene() {
+/* 🎨 MAIN SCENE */
+export default function ThreeScene({ section }: { section: string }) {
+
+  const colors: Record<string, string> = {
+    hero: "#6366f1",
+    projects: "#a855f7",
+    about: "#ec4899",
+    skills: "#818cf8",
+  };
+
+  const activeColor = colors[section] || "#6366f1";
+
   return (
     <div className="absolute inset-0 -z-10">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#14b8a6" />
-        <AnimatedSphere />
-        <FloatingTorus />
-        <FloatingBox />
-        <FloatingIcosahedron />
-        <ParticleField />
+
+        {/* LIGHT */}
+        <ambientLight intensity={0.4} />
+
+        <directionalLight
+          position={[5, 5, 5]}
+          intensity={0.8}
+          color={activeColor}
+        />
+
+        <pointLight
+          position={[-5, -5, -5]}
+          intensity={0.5}
+          color={activeColor}
+        />
+
+        {/* OBJECT */}
+        <AnimatedSphere color={activeColor} />
+        <ParticleField color={activeColor} />
+
       </Canvas>
     </div>
   );
