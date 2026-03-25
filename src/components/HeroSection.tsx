@@ -125,7 +125,7 @@ export default function HeroSection() {
               </Button>
 
               {[ 
-                { icon: Github, href: 'https://github.com/ameliamunandar' },
+                { icon: Github, href: 'https://github.com/ameliamunandarr' },
                 { icon: Instagram, href: 'https://www.instagram.com/amnandarr' },
               ].map((item, i) => (
                 <a
