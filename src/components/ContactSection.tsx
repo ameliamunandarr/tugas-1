@@ -123,7 +123,7 @@ export default function ContactSection() {
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 Have a cool idea, a school project, or just want to say hi?  
                 Feel free to reach out — I'm always excited to collaborate and  
-                <span className="text-indigo-500"> share ideas</span>
+                <span className="text-indigo-500"> share ideas.</span>
               </p>
               <a href="mailto:amlmnndr@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                 <Mail className="text-indigo-500 group-hover:scale-110 transition" />
