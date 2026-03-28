@@ -164,17 +164,17 @@ export default function HeroSection() {
                 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-400 shadow-xl">
 
                   <img
-                    src="/public/profile.jpg"
-                    alt="profile"
-                    className="w-[260px] h-[260px] 
-                    md:w-[340px] md:h-[340px]
-                    lg:w-[380px] lg:h-[380px]
-                    object-cover object-top
-                    rounded-full 
-                    border-[6px] border-white/80 
-                    dark:border-[#050816]
-                    shadow-2xl"
-                  />
+                src="/profile.jpg"
+                alt="profile"
+                className="w-[260px] h-[260px] 
+                md:w-[340px] md:h-[340px]
+                lg:w-[380px] lg:h-[380px]
+                object-cover object-top
+                rounded-full 
+                border-[6px] border-white/80 
+                dark:border-[#050816]
+               shadow-2xl"
+            />
 
                 </div>
               </motion.div>

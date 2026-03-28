@@ -37,7 +37,7 @@ export default function LoadingScreen() {
         {planetPositions.map((pos, i) => (
           <motion.img
             key={i}
-            src="/- Find & Share on GIPHY.gif"
+            src="/bintang.gif"
             alt="floating planet"
             className="absolute w-12 h-12 opacity-80"
             style={{
