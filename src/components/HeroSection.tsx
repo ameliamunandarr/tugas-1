@@ -35,12 +35,10 @@ export default function HeroSection() {
     >
       {/* BACKGROUND */}
       <div className="absolute inset-0">
-        {/* DARK */}
         <div className="hidden dark:block absolute inset-0 bg-gradient-to-br from-indigo-900/30 via-transparent to-pink-900/20" />
         <div className="hidden dark:block absolute top-[-120px] left-[-120px] w-[280px] h-[280px] bg-indigo-500/20 rounded-full blur-[120px]" />
         <div className="hidden dark:block absolute bottom-[-120px] right-[-120px] w-[280px] h-[280px] bg-pink-500/20 rounded-full blur-[120px]" />
 
-        {/* LIGHT */}
         <div className="dark:hidden absolute inset-0 bg-gradient-to-br from-indigo-200 via-white to-pink-200" />
         <div className="dark:hidden absolute top-[-80px] left-[-80px] w-[240px] h-[240px] bg-indigo-300/40 rounded-full blur-[100px]" />
         <div className="dark:hidden absolute bottom-[-80px] right-[-80px] w-[240px] h-[240px] bg-pink-300/40 rounded-full blur-[100px]" />
@@ -54,12 +52,56 @@ export default function HeroSection() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-[1100px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10"
+        className="max-w-[1100px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10 w-full"
       >
-        <div className="grid md:grid-cols-2 items-center gap-6 lg:gap-10">
+
+        {/* 🔥 FLEX LAYOUT */}
+        <div className="flex flex-col md:flex-row items-center gap-6 lg:gap-10">
+
+          {/* ✅ IMAGE (DITURUNKAN DI MOBILE) */}
+          <motion.div
+            variants={item}
+            className="w-full flex justify-center md:justify-end md:w-1/2 mt-12 md:mt-0"
+          >
+            <div className="relative">
+
+              <div className="absolute inset-0 rounded-full 
+              bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-400 
+              blur-[80px] opacity-30" />
+
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative"
+              >
+                <div className="p-[5px] rounded-full 
+                bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-400 shadow-xl">
+
+                  <img
+                    src="/profile.jpg"
+                    alt="profile"
+                    className="w-[220px] h-[220px] 
+                    sm:w-[260px] sm:h-[260px]
+                    md:w-[320px] md:h-[320px]
+                    lg:w-[380px] lg:h-[380px]
+                    object-cover object-top
+                    rounded-full 
+                    border-[6px] border-white/80 
+                    dark:border-[#050816]
+                    shadow-2xl"
+                  />
+
+                </div>
+              </motion.div>
+
+            </div>
+          </motion.div>
 
           {/* TEXT */}
-          <div className="text-center md:text-left max-w-[520px] order-2 md:order-1 mt-6 md:mt-0">
+          <motion.div
+            variants={item}
+            className="w-full text-center md:text-left md:w-1/2"
+          >
 
             <motion.div
               variants={item}
@@ -88,7 +130,7 @@ export default function HeroSection() {
 
             <motion.p
               variants={item}
-              className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-10 max-w-xl"
+              className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-10 max-w-xl mx-auto md:mx-0"
             >
               Building modern and functional web applications while learning 
               and growing as a developer.
@@ -101,13 +143,11 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 onClick={() => scrollTo('#projects')}
-                className="relative overflow-hidden rounded-full px-8 
+                className="rounded-full px-8 
                 bg-gradient-to-r from-indigo-600 to-pink-600 
-                hover:from-indigo-700 hover:to-pink-700
-                text-white shadow-lg group"
+                text-white shadow-lg"
               >
-                <span className="relative z-10">View Projects</span>
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition" />
+                View Projects
               </Button>
 
               {[ 
@@ -126,44 +166,7 @@ export default function HeroSection() {
                 </a>
               ))}
             </motion.div>
-          </div>
 
-          {/* IMAGE */}
-          <motion.div
-            variants={item}
-            className="flex justify-center md:justify-end md:pr-6 lg:pr-10 order-1 md:order-2"
-          >
-            <div className="relative">
-
-              <div className="absolute inset-0 rounded-full 
-              bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-400 
-              blur-[80px] opacity-30" />
-
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative"
-              >
-                <div className="p-[5px] rounded-full 
-                bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-400 shadow-xl">
-
-                  <img
-                    src="/profile.jpg"
-                    alt="profile"
-                    className="w-[260px] h-[260px] 
-                    md:w-[340px] md:h-[340px]
-                    lg:w-[380px] lg:h-[380px]
-                    object-cover object-top
-                    rounded-full 
-                    border-[6px] border-white/80 
-                    dark:border-[#050816]
-                    shadow-2xl"
-                  />
-
-                </div>
-              </motion.div>
-
-            </div>
           </motion.div>
 
         </div>
